@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WanderMatch — Find Your Perfect Destination</title>
+  <meta name="description" content="WanderMatch uses machine learning to recommend your perfect travel destination based on your interests, budget, and travel style." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="nav-icon">✈️</span>
+      <span class="nav-title">WanderMatch</span>
+    </div>
+    <div class="nav-links">
+      <a href="/" class="nav-link active">Home</a>
+    </div>
+  </nav>
+
+  <!-- ── HERO SECTION ── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Discover Your <span class="gradient-text">Perfect</span><br />
+        Travel Destination
+      </h1>
+      <a href="#form-section" class="hero-cta">Start Exploring →</a>
+    </div>
+    <div class="hero-scroll-hint">
+      <span>Scroll to discover</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── FORM SECTION ── -->
+  <section class="form-section" id="form-section">
+    <div class="section-header">
+      <h2>Tell Us About Your Dream Trip</h2>
+      <p>Fill in your preferences and let us find the best destinations for you</p>
+    </div>
+
+    <form action="/recommend" method="POST" class="preference-form" id="pref-form">
+
+      <!-- Interests -->
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">🌿</span> Travel Interests
+          <span class="label-hint">(select all that apply)</span>
+        </label>
+        <div class="checkbox-grid">
+          <label class="chip-checkbox">
+            <input type="checkbox" name="interests" value="Nature" id="int-nature" />
+            <span class="chip">🌲 Nature</span>
+          </label>
+          <label class="chip-checkbox">
+            <input type="checkbox" name="interests" value="Adventure" id="int-adventure" />
+            <span class="chip">⛰️ Adventure</span>
+          </label>
+          <label class="chip-checkbox">
+            <input type="checkbox" name="interests" value="Culture" id="int-culture" />
+            <span class="chip">🏛️ Culture</span>
+          </label>
+          <label class="chip-checkbox">
+            <input type="checkbox" name="interests" value="Relaxation" id="int-relax" />
+            <span class="chip">🏖️ Relaxation</span>
+          </label>
+          <label class="chip-checkbox">
+            <input type="checkbox" name="interests" value="Food" id="int-food" />
+            <span class="chip">🍜 Food</span>
+          </label>
+          <label class="chip-checkbox">
+            <input type="checkbox" name="interests" value="Heritage" id="int-heritage" />
+            <span class="chip">🏰 Heritage</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Budget -->
+      <div class="form-group">
+        <label class="form-label">
+          <span class="label-icon">💰</span> Budget Range
+        </label>
+        <div class="radio-group">
+          <label class="radio-card">
+            <input type="radio" name="budget" value="Low" id="budget-low" />
+            <div class="radio-content">
+              <span class="radio-icon">💵</span>
+              <span class="radio-label">Budget</span>
+              <span class="radio-desc">₹5,000 – ₹15,000</span>
+            </div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="budget" value="Medium" id="budget-medium" checked />
+            <div class="radio-content">
+              <span class="radio-icon">💳</span>
+              <span class="radio-label">Standard</span>
+              <span class="radio-desc">₹15,000 – ₹40,000</span>
+            </div>
+          </label>
+          <label class="radio-card">
+            <input type="radio" name="budget" value="High" id="budget-high" />
+            <div class="radio-content">
+              <span class="radio-icon">💎</span>
+              <span class="radio-label">Premium</span>
+              <span class="radio-desc">₹40,000+</span>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Climate + Travel type side by side -->
+      <div class="form-row">
+        <!-- Climate -->
+        <div class="form-group flex-1">
+          <label class="form-label" for="climate">
+            <span class="label-icon">🌤️</span> Preferred Climate
+          </label>
+          <div class="select-wrapper">
+            <select name="climate" id="climate" class="form-select">
+              <option value="Tropical">🌴 Tropical</option>
+              <option value="Cold">❄️ Cold / Snowy</option>
+              <option value="Dry">☀️ Dry / Arid</option>
+              <option value="Moderate" selected>🌥️ Moderate</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Travel Type -->
+        <div class="form-group flex-1">
+          <label class="form-label">
+            <span class="label-icon">👥</span> Travel Type
+          </label>
+          <div class="radio-group compact">
+            <label class="radio-card small">
+              <input type="radio" name="travel_type" value="Solo" id="tt-solo" />
+              <div class="radio-content">
+                <span class="radio-icon">🧍</span>
+                <span class="radio-label">Solo</span>
+              </div>
+            </label>
+            <label class="radio-card small">
+              <input type="radio" name="travel_type" value="Couple" id="tt-couple" checked />
+              <div class="radio-content">
+                <span class="radio-icon">👫</span>
+                <span class="radio-label">Couple</span>
+              </div>
+            </label>
+            <label class="radio-card small">
+              <input type="radio" name="travel_type" value="Family" id="tt-family" />
+              <div class="radio-content">
+                <span class="radio-icon">👨‍👩‍👧</span>
+                <span class="radio-label">Family</span>
+              </div>
+            </label>
+            <label class="radio-card small">
+              <input type="radio" name="travel_type" value="Group" id="tt-group" />
+              <div class="radio-content">
+                <span class="radio-icon">👥</span>
+                <span class="radio-label">Group</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group">
+        <label class="form-label" for="gender">
+          <span class="label-icon">🧭</span> Travel Profile
+        </label>
+        <div class="select-wrapper">
+          <select name="gender" id="gender" class="form-select">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="submit-btn" id="submit-btn">
+        <span class="btn-text">Find My Destination ✨</span>
+        <span class="btn-loader" id="btn-loader" style="display:none;">
+          <span class="spinner"></span> Matching your dream trip...
+        </span>
+      </button>
+
+    </form>
+  </section>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

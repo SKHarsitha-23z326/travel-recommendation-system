@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WanderMatch — Your Recommendations</title>
+    <meta name="description"
+        content="Your personalised AI-powered travel destination recommendations from WanderMatch." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="results-page">
+
+    <!-- ── NAVBAR ── -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="nav-icon">✈️</span>
+            <span class="nav-title">WanderMatch</span>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+        </div>
+    </nav>
+
+    <!-- ── RESULTS HEADER ── -->
+    <section class="results-hero">
+        <div class="results-hero-content">
+            <h1>Your Top Destinations</h1>
+            <p>Based on your preferences, here are your top picks:</p>
+            <div class="pref-tags">
+                {% for interest in user_prefs.interests %}
+                <span class="pref-tag">{{ interest }}</span>
+                {% endfor %}
+                <span class="pref-tag budget-tag">{{ user_prefs.budget }} Budget</span>
+                <span class="pref-tag climate-tag">{{ user_prefs.climate }}</span>
+                <span class="pref-tag travel-tag">{{ user_prefs.travel_type }}</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── DESTINATION CARDS ── -->
+    <section class="cards-section">
+        <div class="cards-grid">
+            {% for rec in recommendations %}
+            <div class="dest-card fade-in" style="animation-delay: {{ loop.index0 * 0.12 }}s">
+                <div class="card-rank">#{{ loop.index }}</div>
+                <div class="card-type-badge {{ rec.type | lower }}">{{ rec.type }}</div>
+
+                <div class="card-header">
+                    <div class="card-icon">
+                        {% if rec.type == "Beach" %}🏖️
+                        {% elif rec.type == "Nature" %}🌿
+                        {% elif rec.type == "Adventure" %}⛰️
+                        {% elif rec.type == "Historical" %}🏛️
+                        {% else %}🏙️
+                        {% endif %}
+                    </div>
+                    <div class="card-title-block">
+                        <h3 class="card-title">{{ rec.name }}</h3>
+                        <p class="card-state">📍 {{ rec.state }}</p>
+                    </div>
+                </div>
+
+                <div class="card-details">
+                    <div class="detail-item">
+                        <span class="detail-icon">🗓️</span>
+                        <div>
+                            <span class="detail-label">Best Season</span>
+                            <span class="detail-value">{{ rec.best_season }}</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">💰</span>
+                        <div>
+                            <span class="detail-label">Budget</span>
+                            <span class="detail-value">{{ rec.budget }}</span>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-icon">🔥</span>
+                        <div>
+                            <span class="detail-label">Popularity</span>
+                            <div class="popularity-bar">
+                                <div class="popularity-fill" style="width: {{ rec.popularity }}%"></div>
+                            </div>
+                            <span class="detail-value small">{{ rec.popularity }}/100</span>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="{{ rec.booking_url }}" target="_blank" rel="noopener" class="book-btn">
+                    🏨 Book Stay on Booking.com ↗
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ── TRY AGAIN ── -->
+    <section class="cta-section">
+        <h2>Want Different Results?</h2>
+        <p>Adjust your preferences and discover more destinations</p>
+        <a href="/" class="try-again-btn">← Try Again</a>
+    </section>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>

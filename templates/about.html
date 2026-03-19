@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WanderMatch — About & ML Models</title>
+    <meta name="description" content="Learn how WanderMatch uses machine learning to recommend travel destinations." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="about-page">
+
+    <!-- ── NAVBAR ── -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="nav-icon">✈️</span>
+            <span class="nav-title">WanderMatch</span>
+        </div>
+        <div class="nav-links">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/about" class="nav-link active">About</a>
+        </div>
+    </nav>
+
+    <!-- ── ABOUT HERO ── -->
+    <section class="about-hero">
+        <div class="hero-badge">📚 Academic Project</div>
+        <h1>How WanderMatch Works</h1>
+        <p>A Machine Learning–powered travel recommendation system built with scikit-learn and Flask</p>
+    </section>
+
+    <!-- ── SYSTEM PIPELINE ── -->
+    <section class="pipeline-section">
+        <div class="section-header">
+            <h2>System Architecture</h2>
+            <p>End-to-end ML pipeline from data to personalised recommendations</p>
+        </div>
+
+        <div class="pipeline-flow">
+            <div class="pipeline-step">
+                <div class="ps-icon">📂</div>
+                <h4>1. Data Ingestion</h4>
+                <p>Four CSV files are loaded: Destinations, Users, Reviews, and UserHistory</p>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">
+                <div class="ps-icon">🔗</div>
+                <h4>2. Data Merging</h4>
+                <p>MultiJoin on DestinationID and UserID produces a unified training dataset</p>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">
+                <div class="ps-icon">⚙️</div>
+                <h4>3. Preprocessing</h4>
+                <p>LabelEncoder, MultiLabelBinarizer (Preferences), and StandardScaler applied</p>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">
+                <div class="ps-icon">🤖</div>
+                <h4>4. Model Training</h4>
+                <p>Random Forest, Decision Tree, KNN, and Logistic Regression trained (80/20 split)</p>
+            </div>
+            <div class="pipeline-arrow">→</div>
+            <div class="pipeline-step">
+                <div class="ps-icon">🎯</div>
+                <h4>5. Prediction</h4>
+                <p>User input is transformed and passed to Random Forest for Type prediction</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── MODEL COMPARISON ── -->
+    <section class="models-section">
+        <div class="section-header">
+            <h2>ML Model Comparison</h2>
+            <p>All four models are trained on the same dataset and evaluated using accuracy and precision</p>
+        </div>
+
+        <div class="models-layout">
+            <!-- Model Cards -->
+            <div class="model-cards-grid">
+                <div class="model-card rf">
+                    <div class="model-card-header">
+                        <span class="model-card-icon">🌲</span>
+                        <div>
+                            <h3>Random Forest</h3>
+                            <span class="primary-label">Primary Model</span>
+                        </div>
+                    </div>
+                    <p>An ensemble of decision trees trained with bootstrap sampling. Reduces overfitting and handles
+                        high-dimensional data well.</p>
+                    <div class="model-stats">
+                        <div class="stat">
+                            <span class="stat-label">Accuracy</span>
+                            <span class="stat-val rf-acc">{{ accuracy["Random Forest"].accuracy }}%</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Precision</span>
+                            <span class="stat-val">{{ accuracy["Random Forest"].precision }}%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="model-card dt">
+                    <div class="model-card-header">
+                        <span class="model-card-icon">🌿</span>
+                        <div>
+                            <h3>Decision Tree</h3>
+                            <span class="secondary-label">Alternative</span>
+                        </div>
+                    </div>
+                    <p>Splits data on the most informative features using Gini impurity. Interpretable and fast, but may
+                        overfit.</p>
+                    <div class="model-stats">
+                        <div class="stat">
+                            <span class="stat-label">Accuracy</span>
+                            <span class="stat-val">{{ accuracy["Decision Tree"].accuracy }}%</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Precision</span>
+                            <span class="stat-val">{{ accuracy["Decision Tree"].precision }}%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="model-card knn">
+                    <div class="model-card-header">
+                        <span class="model-card-icon">📍</span>
+                        <div>
+                            <h3>K-Nearest Neighbors</h3>
+                            <span class="secondary-label">Alternative</span>
+                        </div>
+                    </div>
+                    <p>Classifies based on the majority vote of k=5 nearest training samples. Simple, non-parametric
+                        instance-based learner.</p>
+                    <div class="model-stats">
+                        <div class="stat">
+                            <span class="stat-label">Accuracy</span>
+                            <span class="stat-val">{{ accuracy["KNN"].accuracy }}%</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Precision</span>
+                            <span class="stat-val">{{ accuracy["KNN"].precision }}%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="model-card lr">
+                    <div class="model-card-header">
+                        <span class="model-card-icon">📈</span>
+                        <div>
+                            <h3>Logistic Regression</h3>
+                            <span class="secondary-label">Baseline</span>
+                        </div>
+                    </div>
+                    <p>Multi-class classifier using softmax regression. Provides a strong linear baseline for comparison
+                        against ensemble methods.</p>
+                    <div class="model-stats">
+                        <div class="stat">
+                            <span class="stat-label">Accuracy</span>
+                            <span class="stat-val">{{ accuracy["Logistic Regression"].accuracy }}%</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Precision</span>
+                            <span class="stat-val">{{ accuracy["Logistic Regression"].precision }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart -->
+            <div class="about-chart-wrap">
+                <h3>Accuracy Comparison</h3>
+                <canvas id="aboutChart" width="420" height="320"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── DATASET INFO ── -->
+    <section class="dataset-section">
+        <div class="section-header">
+            <h2>Dataset Overview</h2>
+        </div>
+        <div class="dataset-grid">
+            <div class="ds-card">
+                <span class="ds-icon">🗺️</span>
+                <h4>Destinations</h4>
+                <p>105 Indian tourist destinations with Type, State, Popularity, and Best Season</p>
+            </div>
+            <div class="ds-card">
+                <span class="ds-icon">👤</span>
+                <h4>Users</h4>
+                <p>105 users with multi-label preferences, gender, and family composition</p>
+            </div>
+            <div class="ds-card">
+                <span class="ds-icon">⭐</span>
+                <h4>Reviews</h4>
+                <p>105 user-destination ratings used as features in the ML model</p>
+            </div>
+            <div class="ds-card">
+                <span class="ds-icon">📅</span>
+                <h4>User History</h4>
+                <p>105 visit history records with experience ratings for training signal</p>
+            </div>
+        </div>
+
+        <div class="target-info">
+            <h3>Target Variable</h3>
+            <p>The model predicts <strong>Destination Type</strong>, a 5-class classification problem:</p>
+            <div class="type-tags">
+                <span class="type-tag historical">🏛️ Historical</span>
+                <span class="type-tag beach">🏖️ Beach</span>
+                <span class="type-tag city">🏙️ City</span>
+                <span class="type-tag nature">🌿 Nature</span>
+                <span class="type-tag adventure">⛰️ Adventure</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section class="cta-section">
+        <h2>Ready to Find Your Destination?</h2>
+        <p>Let our AI match you with your perfect travel spot</p>
+        <a href="/" class="try-again-btn">Get Recommendations →</a>
+    </section>
+
+    <script src="/static/script.js"></script>
+    <script>
+        const accuracyData = {
+            labels: {{ accuracy.keys() | list | tojson }},
+        accuracy: { { accuracy.values() | map(attribute = 'accuracy') | list | tojson } },
+        precision: { { accuracy.values() | map(attribute = 'precision') | list | tojson } },
+    };
+        initAccuracyChart('aboutChart', accuracyData);
+    </script>
+</body>
+
+</html>
